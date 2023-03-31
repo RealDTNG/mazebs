@@ -16,12 +16,19 @@ WINDOW_HEIGHT = 500
 
 window = pygame.display.set_mode((WINDOW_WIDTH,WINDOW_HEIGHT), pygame.HWSURFACE)
 pygame.display.set_caption("God make this my last maze game")
-cirx = 100
-ciry = 100
+cirx = 250
+ciry = 250
+WALLS = []
+WALLS.append((275, 220, 20, 100))
+WALLS.append((205, 220, 20, 100))
 key_input = ""
 def display():
+    global circle
     window.fill((255,255,255)) #White background
-    circle = pygame.draw.circle(window,(0,0,0),(cirx,ciry), 50)
+    for wall in WALLS:
+        pygame.draw.rect(window,(247, 72, 72), wall)
+
+    circle = pygame.draw.circle(window,(0,0,0),(cirx,ciry), 20)
     
 def gridHelp(window,WINDOW_WIDTH,WINDOW_HEIGHT):
         spacer = 10
@@ -35,17 +42,42 @@ def gridHelp(window,WINDOW_WIDTH,WINDOW_HEIGHT):
         for gridY in range(0, WINDOW_HEIGHT, spacer):
             pygame.draw.line(window,(255,0,0),(0,gridY),(WINDOW_WIDTH,gridY)) 
             
-test_list = {True : 1, False: 0}
- 
+def collision(object1, object2):
+    return object1.colliderect(object2)
+            
+t_f_list = {True : 1, False: 0}
+
 while True:
     display()
     key_input = pygame.key.get_pressed()
     
-    cirx += test_list[key_input[pygame.K_LEFT]] * -5
-    cirx += test_list[key_input[pygame.K_RIGHT]] * 5
-    ciry += test_list[key_input[pygame.K_UP]] * -5
-    ciry += test_list[key_input[pygame.K_DOWN]] * 5
+    movex = (t_f_list[key_input[pygame.K_LEFT]] * -3) + (t_f_list[key_input[pygame.K_RIGHT]] * 3)
+    movey = (t_f_list[key_input[pygame.K_UP]] * -3) + (t_f_list[key_input[pygame.K_DOWN]] * 3)
+    if movey and movex != 0:
+        movex = movex/1.7
+        movey = movey/1.7    
+    cirx += movex
+    ciry += movey
+    
+    if 0 > cirx:
+        cirx = 1
+        movex = movex*-1
+    elif cirx > 500:
+        cirx = 499
+        movex = movex*-1
+    if 0 > ciry:
+        ciry = 1
+        movey = movey*-1
+    elif ciry > 500:
+        ciry = 499
+        movey = movey*-1
 
+    for wall in WALLS:
+        if collision(circle,wall):
+            movex = 0
+            movey = 0
+
+    
 
     gridHelp(window,500,500)
     for event in pygame.event.get():

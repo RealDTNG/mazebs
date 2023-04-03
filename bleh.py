@@ -5,15 +5,12 @@ import pygame,sys
 
 
 pygame.init()
-
 # Game Setup
 fps = 60
 fpsClock = pygame.time.Clock()
 WINDOW_WIDTH = 500
 WINDOW_HEIGHT = 500
-
 #Setup of Starting objects
-
 window = pygame.display.set_mode((WINDOW_WIDTH,WINDOW_HEIGHT), pygame.HWSURFACE)
 pygame.display.set_caption("God make this my last maze game")
 cirx = 250
@@ -46,6 +43,7 @@ def display():
 
     circle = pygame.draw.circle(window,(0,0,0),(cirx,ciry), 20)
     
+    
 def gridHelp(window,WINDOW_WIDTH,WINDOW_HEIGHT):
         spacer = 10
         font = pygame.font.SysFont('Consolas', 10)
@@ -58,10 +56,9 @@ def gridHelp(window,WINDOW_WIDTH,WINDOW_HEIGHT):
         for gridY in range(0, WINDOW_HEIGHT, spacer):
             pygame.draw.line(window,(255,0,0),(0,gridY),(WINDOW_WIDTH,gridY)) 
             
-def collision(object1, object2):
-    return object1.colliderect(object2)
             
 t_f_list = {True : 1, False: 0}
+
 
 while True:
     display()
@@ -71,9 +68,6 @@ while True:
     if movey and movex != 0:
         movex = movex/1.7
         movey = movey/1.7    
-    cirx += movex
-    ciry += movey
-    
     if 0 > cirx:
         cirx = 1
         movex = movex*-1
@@ -86,13 +80,13 @@ while True:
     elif ciry > 500:
         ciry = 499
         movey = movey*-1
-
+    display()
     for wall in WALLS:
-        if collision(circle,wall):
-            movex = movex*-1
-            cirx = cirx - (movex*2)
-            movey = movey*-1
-            ciry = ciry - (movey*2)
+        if circle.colliderect(wall):
+            movex = movex*-1.5
+            movey = movey*-1.5
+    cirx += movex
+    ciry += movey
 
 
     gridHelp(window,500,500)

@@ -18,9 +18,25 @@ window = pygame.display.set_mode((WINDOW_WIDTH,WINDOW_HEIGHT), pygame.HWSURFACE)
 pygame.display.set_caption("God make this my last maze game")
 cirx = 250
 ciry = 250
+#Done walls
 WALLS = []
 WALLS.append((275, 220, 20, 100))
 WALLS.append((205, 220, 20, 100))
+#To do walls
+WALLS.append((0, 0, 0, 0))
+WALLS.append((0, 0, 0, 0))
+WALLS.append((0, 0, 0, 0))
+WALLS.append((0, 0, 0, 0))
+WALLS.append((0, 0, 0, 0))
+WALLS.append((0, 0, 0, 0))
+WALLS.append((0, 0, 0, 0))
+WALLS.append((0, 0, 0, 0))
+WALLS.append((0, 0, 0, 0))
+WALLS.append((0, 0, 0, 0))
+WALLS.append((0, 0, 0, 0))
+WALLS.append((0, 0, 0, 0))
+WALLS.append((0, 0, 0, 0))
+
 key_input = ""
 def display():
     global circle
@@ -50,7 +66,6 @@ t_f_list = {True : 1, False: 0}
 while True:
     display()
     key_input = pygame.key.get_pressed()
-    
     movex = (t_f_list[key_input[pygame.K_LEFT]] * -3) + (t_f_list[key_input[pygame.K_RIGHT]] * 3)
     movey = (t_f_list[key_input[pygame.K_UP]] * -3) + (t_f_list[key_input[pygame.K_DOWN]] * 3)
     if movey and movex != 0:
@@ -74,10 +89,11 @@ while True:
 
     for wall in WALLS:
         if collision(circle,wall):
-            movex = 0
-            movey = 0
+            movex = movex*-1
+            cirx = cirx - (movex*2)
+            movey = movey*-1
+            ciry = ciry - (movey*2)
 
-    
 
     gridHelp(window,500,500)
     for event in pygame.event.get():

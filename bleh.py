@@ -17,12 +17,12 @@ cirx = 250
 ciry = 250
 #Done walls
 WALLS = []
-WALLS.append((275, 200, 17, 100))
-WALLS.append((205, 200, 17, 100))
-WALLS.append((222, 200, 53, 17))
+WALLS.append((200, 220, 20, 71))
+WALLS.append((200, 200, 150, 20))
+WALLS.append((200, 276, 70, 20))
+WALLS.append((330, 276, 20, 76))
+WALLS.append((200, 352, 150, 20))
 #To do walls
-WALLS.append((0, 0, 0, 0))
-WALLS.append((0, 0, 0, 0))
 WALLS.append((0, 0, 0, 0))
 WALLS.append((0, 0, 0, 0))
 WALLS.append((0, 0, 0, 0))
@@ -40,8 +40,7 @@ def display():
     window.fill((255,255,255)) #White background
     for wall in WALLS:
         pygame.draw.rect(window,(247, 72, 72), wall)
-
-    circle = pygame.draw.circle(window,(0,0,0),(cirx,ciry), 15)
+    circle = pygame.draw.circle(window,(82, 242, 114),(cirx,ciry), 15)
     
     
 def gridHelp(window,WINDOW_WIDTH,WINDOW_HEIGHT):
@@ -59,10 +58,12 @@ def gridHelp(window,WINDOW_WIDTH,WINDOW_HEIGHT):
             
 t_f_list = {True : 1, False: 0}
 
-
+display()
 while True:
-    display()
     key_input = pygame.key.get_pressed()
+    if key_input[pygame.K_r]:
+        cirx = 250
+        ciry = 250
     movex = (t_f_list[key_input[pygame.K_LEFT]] * -2.5) + (t_f_list[key_input[pygame.K_RIGHT]] * 2.5)
     movey = (t_f_list[key_input[pygame.K_UP]] * -2.5) + (t_f_list[key_input[pygame.K_DOWN]] * 2.5)
     if movey and movex != 0:
@@ -72,23 +73,19 @@ while True:
     ciry += movey  
     if 0 > cirx:
         cirx = 1
-        movex = movex*-1
     elif cirx > 500:
         cirx = 499
-        movex = movex*-1
     if 0 > ciry:
         ciry = 1
-        movey = movey*-1
     elif ciry > 500:
         ciry = 499
-        movey = movey*-1
+   
     display()
     for wall in WALLS:
         if circle.colliderect(wall):
-            movex = movex*-1.5
-            cirx += movex
-            movey = movey*-1.5
-            ciry += movey
+            cirx -= movex
+            ciry -= movey
+            display()
 
 
     gridHelp(window,500,500)

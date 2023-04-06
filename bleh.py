@@ -2,6 +2,7 @@
 # March 31 2023
 # Basic PyGame Setup Code
 import pygame,sys
+from maze_img import Maze
 
 
 pygame.init()
@@ -10,29 +11,30 @@ fps = 60
 fpsClock = pygame.time.Clock()
 WINDOW_WIDTH = 500
 WINDOW_HEIGHT = 500
+map = Maze(0, 0, 500, 500, "maze_map.png")
 #Setup of Starting objects
 window = pygame.display.set_mode((WINDOW_WIDTH,WINDOW_HEIGHT), pygame.HWSURFACE)
 pygame.display.set_caption("God make this my last maze game")
 cirx = 250
 ciry = 250
 #Done walls
-WALLS = []
-WALLS.append((200, 220, 20, 71))
-WALLS.append((200, 200, 150, 20))
-WALLS.append((200, 276, 70, 20))
-WALLS.append((330, 276, 20, 76))
-WALLS.append((200, 352, 150, 20))
+#WALLS = []
+#WALLS.append((200, 220, 20, 71))
+#WALLS.append((200, 200, 150, 20))
+#WALLS.append((200, 276, 70, 20))
+#WALLS.append((330, 276, 20, 76))
+#WALLS.append((200, 352, 150, 20))
 #To do walls
-WALLS.append((0, 0, 0, 0))
-WALLS.append((0, 0, 0, 0))
-WALLS.append((0, 0, 0, 0))
-WALLS.append((0, 0, 0, 0))
-WALLS.append((0, 0, 0, 0))
-WALLS.append((0, 0, 0, 0))
-WALLS.append((0, 0, 0, 0))
-WALLS.append((0, 0, 0, 0))
-WALLS.append((0, 0, 0, 0))
-WALLS.append((0, 0, 0, 0))
+#WALLS.append((0, 0, 0, 0))
+#WALLS.append((0, 0, 0, 0))
+#WALLS.append((0, 0, 0, 0))
+#WALLS.append((0, 0, 0, 0))
+#WALLS.append((0, 0, 0, 0))
+#WALLS.append((0, 0, 0, 0))
+#WALLS.append((0, 0, 0, 0))
+#WALLS.append((0, 0, 0, 0))
+#WALLS.append((0, 0, 0, 0))
+#WALLS.append((0, 0, 0, 0))
 
 key_input = ""
 def display():
@@ -41,6 +43,7 @@ def display():
     for wall in WALLS:
         pygame.draw.rect(window,(247, 72, 72), wall)
     circle = pygame.draw.circle(window,(82, 242, 114),(cirx,ciry), 15)
+    map.draw()
     
     
 def gridHelp(window,WINDOW_WIDTH,WINDOW_HEIGHT):

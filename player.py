@@ -11,6 +11,7 @@ class thing(pygame.sprite.Sprite):
     def move(self):
         t_f_list = {True : 1, False: 0}
         key_input = pygame.key.get_pressed()
+        
         self.movex = (t_f_list[key_input[pygame.K_LEFT]] * -2) + (t_f_list[key_input[pygame.K_RIGHT]] * 2)
         self.movey = (t_f_list[key_input[pygame.K_UP]] * -2) + (t_f_list[key_input[pygame.K_DOWN]] * 2)
 

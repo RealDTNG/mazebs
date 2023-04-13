@@ -8,12 +8,14 @@ from player import thing
 
 pygame.init()
 # Game Setup
-fps = 60
+fps = 30
 fpsClock = pygame.time.Clock()
 WINDOW_WIDTH = 500
 WINDOW_HEIGHT = 500
 
 #Setup of Starting objects
+
+
 window = pygame.display.set_mode((WINDOW_WIDTH,WINDOW_HEIGHT), pygame.HWSURFACE)
 
 maze_map = pygame.image.load('maze_map.png')
@@ -27,15 +29,37 @@ player_g.add(player)
 
 pygame.display.set_caption("God make this my last maze game")
 key_input = ""
+red = pygame.color.Color(255,0,0)
+green = pygame.color.Color(0,255,0)
+blue= pygame.color.Color(0,0,255)
 
+
+colourstr = "red"
+reccolor = red
+
+def changecolour():
+    if colourstr == "green":
+        colourstr = "blue"
+        reccolor = blue
+        return
+    if colourstr == "blue":
+        colourstr = "red"
+        reccolor = red
+        return
+    if colourstr == "red":
+        colourstr = "green"
+        reccolor = green
+        return
 
 def display():
-    global circle
+    global winrec
     window.fill((255,255,255)) #White background
     map_g.draw(window)
+    winrec =pygame.draw.rect(window,(reccolor),(293,10,72,72))
+    changecolour()
     player_g.draw(window)
-            
-
+    
+        
 display()
 while True:
     player.move()
@@ -43,7 +67,11 @@ while True:
     if pygame.sprite.spritecollide(player, map_g, False, collided=pygame.sprite.collide_mask):
         player.back()
         display()
-
+    if winrec.colliderect(player):
+            pygame.quit()
+            sys.exit()
+    
+        
     for event in pygame.event.get():
     # if user  QUIT then the screen will close
         if event.type == pygame.QUIT:
